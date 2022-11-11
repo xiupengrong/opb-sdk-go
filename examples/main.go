@@ -50,7 +50,7 @@ var (
 
 func main() {
 	//能量值费用：「创建NFT/MT类别」、「发行NFT/MT」为 40 万能量值（等值人民币：0.1元），其他交易类型为 20 万能量值（等值人民币：0.05元）
-	fee, _ := types.ParseDecCoins("400000ugas") 
+	fee, _ := types.ParseDecCoins("400000ugas")
 	// 初始化 SDK 配置
 	options := []types.Option{
 		types.AlgoOption(algo),
@@ -73,6 +73,8 @@ func main() {
 	authToken.SetRequireTransportSecurity(false)
 	// 若开启 TLS 连接，此处可设置验证证书的主机名；默认 bsngate.com
 	authToken.SetDomain("bsngate.com")
+	// 如果使用的是DDC数据中心方搭建的网关接入网络，此处可设置chainType; 默认 irisnet
+	authToken.SetChainType("irisnet")
 	// 创建 OPB 客户端
 	client := opb.NewClient(cfg, &authToken)
 

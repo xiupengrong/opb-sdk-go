@@ -10,16 +10,17 @@ type AuthToken struct {
 	chainAccountAddr string
 	enableTLS        bool
 	domain           string
+	chainType        string
 }
 
 func NewAuthToken(projectID, projectKey, chainAccountAddr string) AuthToken {
-	return AuthToken{projectID, projectKey, chainAccountAddr, true, "bsngate.com"}
+	return AuthToken{projectID, projectKey, chainAccountAddr, true, "bsngate.com", "irisnet"}
 }
 
 func (a *AuthToken) GetRequestMetadata(context.Context, ...string) (
 	map[string]string, error,
 ) {
-	return map[string]string{"projectIdHeader": a.projectID, "projectKeyHeader": a.projectKey, "chainAccountAddressHeader": a.chainAccountAddr}, nil
+	return map[string]string{"projectIdHeader": a.projectID, "projectKeyHeader": a.projectKey, "chainAccountAddressHeader": a.chainAccountAddr, "x-api-chain-type": a.chainType}, nil
 }
 
 func (a *AuthToken) RequireTransportSecurity() bool {
@@ -52,4 +53,12 @@ func (a *AuthToken) SetDomain(domain string) {
 
 func (a *AuthToken) GetDomain() string {
 	return a.domain
+}
+
+func (a *AuthToken) SetChainType(chainType string) {
+	a.chainType = chainType
+}
+
+func (a *AuthToken) GetChainType() string {
+	return a.chainType
 }
